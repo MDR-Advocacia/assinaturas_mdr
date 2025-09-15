@@ -3,402 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de Cartões de Contato</title>
-    <link rel="stylesheet" href="EstiloAssinaturas.css">
+    <title>Gerador de Assinaturas MDR</title>
+    <link rel="stylesheet" href="EstilosAssinaturas.css">
 </head>
 <body>
 
     <div class="logo-container">
-        <img src="./assinaturateste/Logo MDR Advocacia branca.png" alt="Logo MDR Advocacia">
+        <img src="Logo MDR Advocacia branca.png" alt="Logo MDR Advocacia">
     </div>
     
-
     <div class="form-container">
-        <h1>Preencha os dados para gerar a assinatura</h1>
+        <h1>Gerador de Assinatura</h1>
         <form id="contactForm">
-            <label for="name">Nome:</label><br>
-            <input type="text" id="name" name="name" required><br><br>
+            <label for="name">Nome:</label>
+            <input type="text" id="name" name="name" required>
 
-            <label for="role">Cargo:</label><br>
+            <label for="role">Cargo:</label>
             <select id="role" name="role" onchange="toggleOAB()">
-                
                 <option value="Assistente Jurídico">Assistente Jurídico</option>
                 <option value="Advogado">Advogado</option>
                 <option value="Estagiário">Estagiário</option>
                 <option value="Recursos Humanos">RH</option>
                 <option value="TI">TI</option>
-                
-                
-            </select><br><br>
+            </select>
             
-            <label for="phone">Telefone:</label><br>
-            <input type="text" id="phone" name="phone" required><br><br>
+            <label for="phone">Telefone:</label>
+            <input type="text" id="phone" name="phone" placeholder="(XX) XXXXX-XXXX" required>
             
-            <label for="oab">OAB:</label><br>
-            <input type="text" id="oab" name="oab" disabled><br><br>
+            <div id="oab-container" style="display: none;">
+                <label for="oab">OAB:</label>
+                <input type="text" id="oab" name="oab">
+            </div>
 
-            <label for="color">Cor do Cartão:</label><br>
+            <label for="color">Cor da Assinatura:</label>
             <select id="color" name="color">
+                <option value="blue">Azul (Padrão)</option>
                 <option value="white">Branco</option>
-                <option value="blue">Azul</option>
                 <option value="black">Preto</option>
-            </select><br><br>
+            </select>
             
-            <button type="button" onclick="generateCard()">Gerar Cartão</button>
+            <button type="button" onclick="generateCard()">Gerar Assinatura</button>
         </form>
     </div>
 
+    <footer>
+        <p>Desenvolvido por MDR Advocacia</p>
+    </footer>
+
     <script>
-        // Função para habilitar/desabilitar o campo OAB
+        // Função para mostrar/esconder o campo OAB
         function toggleOAB() {
-            var role = document.getElementById("role").value;
-            var oabField = document.getElementById("oab");
+            const role = document.getElementById("role").value;
+            const oabContainer = document.getElementById("oab-container");
+            const oabField = document.getElementById("oab");
 
             if (role === "Advogado") {
-                oabField.disabled = false; // Habilitar o campo de OAB
+                oabContainer.style.display = 'block'; // Mostra o campo
             } else {
-                oabField.disabled = true; // Desabilitar o campo de OAB
-                oabField.value = ""; // Limpar o valor da OAB se desabilitado
+                oabContainer.style.display = 'none'; // Esconde o campo
+                oabField.value = ""; // Limpa o valor se não for advogado
             }
         }
 
-        function definirModelo(){
-            var cor = document.getElementById("color").value;
-            var modelo;
-            var name = document.getElementById("name").value;
-            var role = document.getElementById("role").value;
-            var oab = document.getElementById("oab").value;
-            var phone = document.getElementById("phone").value;
-
-            if ( cor == "white"){
-                //MODELO BRANCO
-                
-                modelo = `
-
-                    <head>
-                        <meta charset="UTF-8">
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <title>Assinatura Branca</title>
-                        <link rel="stylesheet" href="./assinatura.css">
-                    </head>
-                    
-                    <table style="width: 100%; max-width: 800px; background-color: #ffffff; padding: 0; margin: 0; font-family: 'Arial', sans-serif; color: #333;">
-                    <tr>
-                    <td style="padding: 0; margin: 0;">
-                        <table style="width: 100%; height: 200px; padding-left: 30px; box-sizing: border-box; padding-top: 20px;">
-                        <tr>
-                            <td style="width: 25%; vertical-align: middle;">
-                            <img src="https://drive.google.com/uc?id=1ZhgK53kfd9kFy0SUJCCHn864MpcRlPiY" alt="Logo MDR" style="width: 100%; max-width: 230px; object-fit: fill;">
-                            </td>
-                            <td style="vertical-align: middle; padding-left: 30px;">
-                            <h2 style="margin: 0; font-size: 20px; font-weight: 600;">${name}</h2>
-                            <h5 style="margin: 0; font-size: 16px; font-weight: 400; margin-bottom: 5px;">${role}</h5>
-                            <p style="margin: 0; font-size: 10px; margin-bottom: 15px;">${oab}</p>
-                            <table style="width: 100%; font-size: 9px; margin-bottom: 10px;">
-                                <tr>
-                                <td style="vertical-align: middle;">
-                                    <img src="https://drive.google.com/uc?id=1gBdq236eJvx30PUNzg2FPYr7G3wGkOMM" style="width: 15px; height: 15px;">
-                                </td>
-                                <td>
-                                    <span style="color: #2b344a;">${phone}</span>
-                                </td>
-                                </tr>
-                                <tr>
-                                <td style="vertical-align: middle;">
-                                    <img src="https://drive.google.com/uc?id=1L3FN8Fo52S9-y7oJTmHLf1EQUpq6QavE" style="width: 15px; height: 15px;">
-                                </td>
-                                <td>
-                                    <a href="https://mdradvocacia.com/" target="_blank" style="color: #2b344a; text-decoration: none;">MDRADVOCACIA.COM</a>
-                                </td>
-                                </tr>
-                                <tr>
-                                <td style="vertical-align: middle;">
-                                    <img src="https://drive.google.com/uc?id=1TkNVMf7S-nuv0Ps5Z2Kagfm4Wg1EX1Uf" style="width: 15px; height: 15px;">
-                                </td>
-                                <td>
-                                    <span>R. Desembargador José Gomes da Costa, 1975. Capim Macio. Natal/RN</span>
-                                </td>
-                                </tr>
-                            </table>
-                            </td>
-                        </tr>
-                        </table>
-                
-                        <table style="width: 100%; height: 100px; display: flex; align-items: center; padding-left: 30px;">
-                        <tr>
-                            <td>
-                            <a href="https://production-customer-certificates.s3.amazonaws.com/eaddf325-b480-4977-8455-147aed52fe6f-f5e69643-fa72-4fb5-a179-f1254900a664-1723215880986-certificate.png" target="_blank" style="color: white; text-decoration: none;">
-                                <img src="https://drive.google.com/uc?id=1Akux02ouNm5cc43Z9HXhGn72k7c2y9vp" alt="CLT Certificado" style="width: 50px; margin-right: 10px;">
-                            </a>
-                            <a href="https://production-customer-certificates.s3.amazonaws.com/eaddf325-b480-4977-8455-147aed52fe6f-e11b41e5-4cf7-4c6f-bdb4-c015d11724ab-1717824964860-certificate.png" target="_blank" style="color: white; text-decoration: none;">
-                                <img src="https://drive.google.com/uc?id=1APBy2l9-nWQLPftjStIhhlvKeYCpw7MO" alt="Cyber Certificado" style="width: 50px; margin-right: 10px;">
-                            </a>
-                            <a href="https://production-customer-certificates.s3.amazonaws.com/eaddf325-b480-4977-8455-147aed52fe6f-93e9659c-eca3-47a2-94e3-964e5ed7b7b3-1717813650738-certificate.png" target="_blank" style="color: white; text-decoration: none;">
-                                <img src="https://drive.google.com/uc?id=1sLWeZMRnieQiLhXkcl07xiWpjxTc1Q_d" alt="ESG Certificado" style="width: 50px; margin-right: 10px;">
-                            </a>
-                            <a href="https://production-customer-certificates.s3.amazonaws.com/eaddf325-b480-4977-8455-147aed52fe6f-79a37b8f-20ac-45ec-b6d0-7d40d6c38bd9-1723215883309-certificate.png" target="_blank" style="color: white; text-decoration: none;">
-                                <img src="https://drive.google.com/uc?id=1iGC1BtmPEyuh8kFjdrCBVwtnKDVtNbDd" alt="LGPD Certificado" style="width: 50px; margin-right: 10px;">
-                            </a>
-                            <a href="https://production-customer-certificates.s3.amazonaws.com/eaddf325-b480-4977-8455-147aed52fe6f-79a37b8f-20ac-45ec-b6d0-7d40d6c38bd9-1723215883309-certificate.png" target="_blank" style="color: white; text-decoration: none;">
-                                <img src="https://drive.google.com/uc?id=1b-SL4Ine0t2aPOpzRbKlUHtoc-42zA9G" alt="LGPD Certificado" style="width: 50px; margin-right: 10px;">
-                            </a>
-                            <a href="https://production-customer-certificates.s3.amazonaws.com/eaddf325-b480-4977-8455-147aed52fe6f-79a37b8f-20ac-45ec-b6d0-7d40d6c38bd9-1723215883309-certificate.png" target="_blank" style="color: white; text-decoration: none;">
-                                <img src="https://drive.google.com/uc?id=1LCZTcbPr37v3TYZ2oc1B5DBpWNo5vDba" alt="LGPD Certificado" style="width: 50px; margin-right: 10px;">
-                            </a>
-                            <a href="https://www.laqi.org/" target="_blank" style="color: white;">
-                                <img src="https://drive.google.com/uc?id=1xuKSU8wGbYjXAUYSaEP68VCLpguRXs-a" alt="Law Seal" style="width: 50px; margin-right: 10px;">
-                            </a>
-                            <a href="https://www.laqi.org/" target="_blank" style="color: white;">
-                                <img src="https://drive.google.com/uc?id=1M8OcVtC3ho6iq4Zu-4ErmbPrAoHNcxk1" alt="Law Seal" style="width: 50px; margin-right: 10px;">
-                            </a>
-                            <a href="https://www.laqi.org/" target="_blank" style="color: white;">
-                                <img src="https://drive.google.com/uc?id=1kJ-A2xLn4QQmHw66A3HGlP7XG8eIelgI" alt="Law Seal" style="width: 50px; margin-right: 10px;">
-                            </a>
-                            <a href="https://www.laqi.org/" target="_blank">
-                                <img src="https://drive.google.com/uc?id=11M5tZAq49_acFKP0husBQ3pLyfiLcEdB" alt="Law Seal" style="width: 50px; margin-right: 10px;">
-                            </a>
-                            </td>
-                        </tr>
-                        </table>
-                    </td>
-                    </tr>
-                </table>
-  
-                
-                    `
-                    return modelo;
-
-
-
-            }else if(cor == "blue"){
-                //MODELO AZUL
-                modelo = `
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Assinatura Azul</title>
-                    <link rel="stylesheet" href="./assinatura.css">
-                </head>                
-
-                
-            <table style="width: 100%; max-width: 800px; background-color: #2b344a; padding: 0; margin: 0; font-family: 'Arial', sans-serif; color: white;">
-                <tr>
-                <td style="padding: 0; margin: 0;">
-                    <table style="width: 100%; height: 200px; padding-left: 30px; box-sizing: border-box; padding-top: 20px;">
-                    <tr>
-                        <td style="width: 25%; vertical-align: middle;">
-                        <img src="https://drive.google.com/uc?id=1nwRhYl1Jo3c55twJ_Zs29syqSIu3vpV0" alt="Logo MDR" style="width: 100%; max-width: 230px; object-fit: fill;">
-                        </td>
-                        <td style="vertical-align: middle; padding-left: 30px;">
-                        <h2 style="margin: 0; font-size: 20px; font-weight: 600; color: white;">${name}</h2>
-                        <h5 style="margin: 0; font-size: 16px; font-weight: 400; margin-bottom: 5px; color: white;">${role}</h5>
-                        <p style="margin: 0; font-size: 10px; margin-bottom: 15px; color: white;">${oab}</p>
-                        <table style="width: 100%; font-size: 9px; margin-bottom: 10px;">
-                            <tr>
-                            <td style="vertical-align: middle;">
-                                <img src="https://drive.google.com/uc?id=1GqmGSnFlGBgkQLDpUxfaK8-LHs5r2sev" style="width: 15px; height: 15px;">
-                            </td>
-                            <td>
-                                <span style="color: white;">${phone}</span>
-                            </td>
-                            </tr>
-                            <tr>
-                            <td style="vertical-align: middle;">
-                                <img src="https://drive.google.com/uc?id=1ws9y6duhKAPI8GZeelGlHJd9J2uDboRJ" style="width: 15px; height: 15px;">
-                            </td>
-                            <td>
-                                <a href="https://mdradvocacia.com/" target="_blank" style="color: white; text-decoration: none; text-decoration-line: none;">MDRADVOCACIA.COM</a>
-                            </td>
-                            </tr>
-                            <tr>
-                            <td style="vertical-align: middle;">
-                                <img src="https://drive.google.com/uc?id=1ctuGgBAIezALXqymOjVs4xn9nQSinmTP" style="width: 15px; height: 15px;">
-                            </td>
-                            <td>
-                                <span style="color: white;">R. Desembargador José Gomes da Costa, 1975. Capim Macio. Natal/RN</span>
-                            </td>
-                            </tr>
-                        </table>
-                        </td>
-                    </tr>
-                    </table>
+        // Função que cria o HTML da assinatura
+        function getSignatureTemplate(data) {
             
-                    <table style="width: 100%; height: 100px; display: flex; align-items: center; padding-left: 30px;">
-                    <tr>
-                        <td>
-                        <a href="https://production-customer-certificates.s3.amazonaws.com/eaddf325-b480-4977-8455-147aed52fe6f-f5e69643-fa72-4fb5-a179-f1254900a664-1723215880986-certificate.png" target="_blank" style="color: #2b344a;">
-                            <img src="https://drive.google.com/uc?id=1Akux02ouNm5cc43Z9HXhGn72k7c2y9vp" alt="CLT Certificado" style="width: 50px; margin-right: 10px;">
-                        </a>
-                        <a href="https://production-customer-certificates.s3.amazonaws.com/eaddf325-b480-4977-8455-147aed52fe6f-e11b41e5-4cf7-4c6f-bdb4-c015d11724ab-1717824964860-certificate.png" target="_blank" style="color: #2b344a;">
-                            <img src="https://drive.google.com/uc?id=1APBy2l9-nWQLPftjStIhhlvKeYCpw7MO" alt="Cyber Certificado" style="width: 50px; margin-right: 10px;">
-                        </a>
-                        <a href="https://production-customer-certificates.s3.amazonaws.com/eaddf325-b480-4977-8455-147aed52fe6f-93e9659c-eca3-47a2-94e3-964e5ed7b7b3-1717813650738-certificate.png" target="_blank" style="color: #2b344a;">
-                            <img src="https://drive.google.com/uc?id=1sLWeZMRnieQiLhXkcl07xiWpjxTc1Q_d" alt="ESG Certificado" style="width: 50px; margin-right: 10px;">
-                        </a>
-                        <a href="https://production-customer-certificates.s3.amazonaws.com/eaddf325-b480-4977-8455-147aed52fe6f-79a37b8f-20ac-45ec-b6d0-7d40d6c38bd9-1723215883309-certificate.png" target="_blank" style="color: #2b344a;">
-                            <img src="https://drive.google.com/uc?id=1iGC1BtmPEyuh8kFjdrCBVwtnKDVtNbDd" alt="LGPD Certificado" style="width: 50px; margin-right: 10px;">
-                        </a>
-                        <a href="https://production-customer-certificates.s3.amazonaws.com/eaddf325-b480-4977-8455-147aed52fe6f-79a37b8f-20ac-45ec-b6d0-7d40d6c38bd9-1723215883309-certificate.png" target="_blank" style="color: #2b344a;">
-                            <img src="https://drive.google.com/uc?id=1b-SL4Ine0t2aPOpzRbKlUHtoc-42zA9G" alt="LGPD Certificado" style="width: 50px; margin-right: 10px;">
-                        </a>
-                        <a href="https://production-customer-certificates.s3.amazonaws.com/eaddf325-b480-4977-8455-147aed52fe6f-79a37b8f-20ac-45ec-b6d0-7d40d6c38bd9-1723215883309-certificate.png" target="_blank" style="color: #2b344a;">
-                            <img src="https://drive.google.com/uc?id=1LCZTcbPr37v3TYZ2oc1B5DBpWNo5vDba" alt="LGPD Certificado" style="width: 50px; margin-right: 10px;">
-                        </a>
-                        <a href="https://www.laqi.org/" target="_blank" style="color: #2b344a;">
-                            <img src="https://drive.google.com/uc?id=1xuKSU8wGbYjXAUYSaEP68VCLpguRXs-a" alt="Law Seal" style="width: 50px; margin-right: 10px;">
-                        </a>
-                        <a href="https://www.laqi.org/" target="_blank" style="color: #2b344a;">
-                            <img src="https://drive.google.com/uc?id=1M8OcVtC3ho6iq4Zu-4ErmbPrAoHNcxk1" alt="Law Seal" style="width: 50px; margin-right: 10px;">
-                        </a>
-                        <a href="https://www.laqi.org/" target="_blank" style="color: #2b344a;">
-                            <img src="https://drive.google.com/uc?id=1kJ-A2xLn4QQmHw66A3HGlP7XG8eIelgI" alt="Law Seal" style="width: 50px; margin-right: 10px;">
-                        </a>
-                        <a href="https://www.laqi.org/" target="_blank" style="color: #2b344a;">
-                            <img src="https://drive.google.com/uc?id=11M5tZAq49_acFKP0husBQ3pLyfiLcEdB" alt="Law Seal" style="width: 50px; margin-right: 10px;">
-                        </a>
-                        </td>
-                    </tr>
-                    </table>
-                </td>
-                </tr>
-            </table>
-  
-                
-                `    
+            // Define as cores com base na seleção
+            let config = {
+                bgColor: '#2b344a', // Azul
+                textColor: '#ffffff',
+                logoUrl: 'https://drive.google.com/uc?id=1nwRhYl1Jo3c55twJ_Zs29syqSIu3vpV0', // Logo Branca
+                iconPhone: 'https://drive.google.com/uc?id=1GqmGSnFlGBgkQLDpUxfaK8-LHs5r2sev',
+                iconSite: 'https://drive.google.com/uc?id=1ws9y6duhKAPI8GZeelGlHJd9J2uDboRJ',
+                iconAddress: 'https://drive.google.com/uc?id=1ctuGgBAIezALXqymOjVs4xn9nQSinmTP'
+            };
 
-                return modelo;
-
- 
-
-            }else{
-                //MODELO PRETO
-                
-                modelo = `
-                
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Assinatura Preta</title>
-                    <link rel="stylesheet" href="./assinatura.css">
-                </head>  
-
-                <table style="width: 100%; max-width: 800px; background-color: black; padding: 0; margin: 0; font-family: 'Arial', sans-serif; color: white;">
-                    <tr>
-                    <td style="padding: 0; margin: 0;">
-                        <table style="width: 100%; height: 200px; padding-left: 30px; box-sizing: border-box; padding-top: 20px;">
-                        <tr>
-                            <td style="width: 25%; vertical-align: middle;">
-                            <img src="https://drive.google.com/uc?id=1nwRhYl1Jo3c55twJ_Zs29syqSIu3vpV0" alt="Logo MDR" style="width: 100%; max-width: 230px; object-fit: fill;">
-                            </td>
-                            <td style="vertical-align: middle; padding-left: 30px;">
-                            <h2 style="margin: 0; font-size: 20px; font-weight: 600; color: white;">${name}</h2>
-                            <h5 style="margin: 0; font-size: 16px; font-weight: 400; margin-bottom: 5px; color: white;">${role}</h5>
-                            <p style="margin: 0; font-size: 10px; margin-bottom: 15px; color: white;">${oab}</p>
-                            <table style="width: 100%; font-size: 9px; margin-bottom: 10px;">
-                                <tr>
-                                <td style="vertical-align: middle;">
-                                    <img src="https://drive.google.com/uc?id=1GqmGSnFlGBgkQLDpUxfaK8-LHs5r2sev" style="width: 15px; height: 15px;">
-                                </td>
-                                <td>
-                                    <span style="color: white;">${phone}</span>
-                                </td>
-                                </tr>
-                                <tr>
-                                <td style="vertical-align: middle;">
-                                    <img src="https://drive.google.com/uc?id=1ws9y6duhKAPI8GZeelGlHJd9J2uDboRJ" style="width: 15px; height: 15px;">
-                                </td>
-                                <td>
-                                    <a href="https://mdradvocacia.com/" target="_blank" style="color: white; text-decoration: none;">MDRADVOCACIA.COM</a>
-                                </td>
-                                </tr>
-                                <tr>
-                                <td style="vertical-align: middle;">
-                                    <img src="https://drive.google.com/uc?id=1ctuGgBAIezALXqymOjVs4xn9nQSinmTP" style="width: 15px; height: 15px;">
-                                </td>
-                                <td>
-                                    <span style="color: white;">R. Desembargador José Gomes da Costa, 1975. Capim Macio. Natal/RN</span>
-                                </td>
-                                </tr>
-                            </table>
-                            </td>
-                        </tr>
-                        </table>
-                
-                        <table style="width: 100%; height: 100px; display: flex; align-items: center; padding-left: 30px;">
-                        <tr>
-                            <td>
-                            <a href="https://production-customer-certificates.s3.amazonaws.com/eaddf325-b480-4977-8455-147aed52fe6f-f5e69643-fa72-4fb5-a179-f1254900a664-1723215880986-certificate.png" target="_blank" style="color: black; text-decoration:  none;">
-                                <img src="https://drive.google.com/uc?id=1Akux02ouNm5cc43Z9HXhGn72k7c2y9vp" alt="CLT Certificado" style="width: 50px; margin-right: 10px;">
-                            </a>
-                            <a href="https://production-customer-certificates.s3.amazonaws.com/eaddf325-b480-4977-8455-147aed52fe6f-e11b41e5-4cf7-4c6f-bdb4-c015d11724ab-1717824964860-certificate.png" target="_blank" style="color: black; text-decoration: none;">
-                                <img src="https://drive.google.com/uc?id=1APBy2l9-nWQLPftjStIhhlvKeYCpw7MO" alt="Cyber Certificado" style="width: 50px; margin-right: 10px;">
-                            </a>
-                            <a href="https://production-customer-certificates.s3.amazonaws.com/eaddf325-b480-4977-8455-147aed52fe6f-93e9659c-eca3-47a2-94e3-964e5ed7b7b3-1717813650738-certificate.png" target="_blank" style="color: black; text-decoration: none;">
-                                <img src="https://drive.google.com/uc?id=1sLWeZMRnieQiLhXkcl07xiWpjxTc1Q_d" alt="ESG Certificado" style="width: 50px; margin-right: 10px;">
-                            </a>
-                            <a href="https://production-customer-certificates.s3.amazonaws.com/eaddf325-b480-4977-8455-147aed52fe6f-79a37b8f-20ac-45ec-b6d0-7d40d6c38bd9-1723215883309-certificate.png" target="_blank" style="color: black; text-decoration: none;">
-                                <img src="https://drive.google.com/uc?id=1iGC1BtmPEyuh8kFjdrCBVwtnKDVtNbDd" alt="LGPD Certificado" style="width: 50px; margin-right: 10px;">
-                            </a>
-                            <a href="https://production-customer-certificates.s3.amazonaws.com/eaddf325-b480-4977-8455-147aed52fe6f-79a37b8f-20ac-45ec-b6d0-7d40d6c38bd9-1723215883309-certificate.png" target="_blank" style="color: black; text-decoration: none;">
-                                <img src="https://drive.google.com/uc?id=1b-SL4Ine0t2aPOpzRbKlUHtoc-42zA9G" alt="LGPD Certificado" style="width: 50px; margin-right: 10px;">
-                            </a>
-                            <a href="https://production-customer-certificates.s3.amazonaws.com/eaddf325-b480-4977-8455-147aed52fe6f-79a37b8f-20ac-45ec-b6d0-7d40d6c38bd9-1723215883309-certificate.png" target="_blank" style="color: black; text-decoration: none;">
-                                <img src="https://drive.google.com/uc?id=1LCZTcbPr37v3TYZ2oc1B5DBpWNo5vDba" alt="LGPD Certificado" style="width: 50px; margin-right: 10px;">
-                            </a>
-                            <a href="https://www.laqi.org/" target="_blank" style="color: black;">
-                                <img src="https://drive.google.com/uc?id=1LCZTcbPr37v3TYZ2oc1B5DBpWNo5vDba" alt="Law Seal" style="width: 50px; margin-right: 10px;">
-                            </a>
-                            <a href="https://www.laqi.org/" target="_blank" style="color: black;">
-                                <img src="https://drive.google.com/uc?id=1xuKSU8wGbYjXAUYSaEP68VCLpguRXs-a" alt="Law Seal" style="width: 50px; margin-right: 10px;">
-                            </a>
-                            <a href="https://www.laqi.org/" target="_blank" style="color: black;">
-                                <img src="https://drive.google.com/uc?id=1kJ-A2xLn4QQmHw66A3HGlP7XG8eIelgI" alt="Law Seal" style="width: 50px; margin-right: 10px;">
-                            </a>
-                            <a href="https://www.laqi.org/" target="_blank">
-                                <img src="https://drive.google.com/uc?id=11M5tZAq49_acFKP0husBQ3pLyfiLcEdB" alt="Law Seal" style="width: 50px; margin-right: 10px;">
-                            </a>
-                            </td>
-                        </tr>
-                        </table>
-                    </td>
-                    </tr>
-                </table>
-  
-  
-                
-                `    
-
-                return modelo;
-
-
+            if (data.color === 'white') {
+                config = {
+                    bgColor: '#ffffff',
+                    textColor: '#333333',
+                    logoUrl: 'https://drive.google.com/uc?id=1ZhgK53kfd9kFy0SUJCCHn864MpcRlPiY', // Logo Azul
+                    iconPhone: 'https://drive.google.com/uc?id=1gBdq236eJvx30PUNzg2FPYr7G3wGkOMM',
+                    iconSite: 'https://drive.google.com/uc?id=1L3FN8Fo52S9-y7oJTmHLf1EQUpq6QavE',
+                    iconAddress: 'https://drive.google.com/uc?id=1TkNVMf7S-nuv0Ps5Z2Kagfm4Wg1EX1Uf'
+                };
+            } else if (data.color === 'black') {
+                config.bgColor = '#000000';
             }
 
+            // Gera a linha da OAB somente se o campo tiver valor
+            const oabLine = data.oab 
+                ? `<p style="margin: 0; font-size: 10px; margin-bottom: 15px; color: ${config.textColor};">${data.oab}</p>`
+                : '';
+
+            // Retorna o HTML final usando os dados e as cores definidas
+            return `
+                <table style="width: 100%; max-width: 800px; background-color: ${config.bgColor}; padding: 0; margin: 0; font-family: 'Arial', sans-serif; color: ${config.textColor};">
+                    <tr>
+                        <td style="padding: 20px 0 10px 30px; vertical-align: top;">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="width: 25%; vertical-align: middle;">
+                                        <img src="${config.logoUrl}" alt="Logo MDR" style="width: 100%; max-width: 200px;">
+                                    </td>
+                                    <td style="vertical-align: middle; padding-left: 30px;">
+                                        <h2 style="margin: 0; font-size: 20px; font-weight: 600; color: ${config.textColor};">${data.name}</h2>
+                                        <h5 style="margin: 0; font-size: 16px; font-weight: 400; margin-bottom: 5px; color: ${config.textColor};">${data.role}</h5>
+                                        ${oabLine}
+                                        <table style="font-size: 9px;">
+                                            <tr>
+                                                <td style="vertical-align: middle; padding-right: 5px;"><img src="${config.iconPhone}" style="width: 15px; height: 15px;"></td>
+                                                <td><span style="color: ${config.textColor};">${data.phone}</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="vertical-align: middle; padding-right: 5px;"><img src="${config.iconSite}" style="width: 15px; height: 15px;"></td>
+                                                <td><a href="https://mdradvocacia.com/" target="_blank" style="color: ${config.textColor}; text-decoration: none;">MDRADVOCACIA.COM</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="vertical-align: middle; padding-right: 5px;"><img src="${config.iconAddress}" style="width: 15px; height: 15px;"></td>
+                                                <td><span style="color: ${config.textColor};">R. Desembargador José Gomes da Costa, 1975. Capim Macio. Natal/RN</span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px 0 20px 30px;">
+                            <img src="https://drive.google.com/uc?id=15UOqmG-rcPEuGZyIKVWzHEvzNtW6MNUw" alt="Selos e Certificados" style="max-width: 100%; height: auto;">
+                        </td>
+                    </tr>
+                </table>
+            `;
         }
 
+        // Função principal que gera o cartão
         function generateCard() {
-            // Obter os valores dos campos
-            var name = document.getElementById("name").value;
-            var role = document.getElementById("role").value;
-            var phone = document.getElementById("phone").value;
-            var oab = document.getElementById("oab").value;
-            var color = document.getElementById("color").value;
+            // Coleta os dados do formulário
+            const cardData = {
+                name: document.getElementById("name").value,
+                role: document.getElementById("role").value,
+                phone: document.getElementById("phone").value,
+                oab: document.getElementById("oab").value,
+                color: document.getElementById("color").value
+            };
+            
+            // Validação simples
+            if (!cardData.name || !cardData.phone) {
+                alert("Por favor, preencha os campos de Nome e Telefone.");
+                return;
+            }
 
-            //o html é definido e preenchido pela função 
-            var cardHTML = definirModelo();
+            // Gera o HTML da assinatura
+            const cardHTML = getSignatureTemplate(cardData);
 
-
-            // Abrir uma nova aba e inserir o cartão gerado
-            var newWindow = window.open();
+            // Abre uma nova aba e insere o HTML gerado
+            const newWindow = window.open();
             newWindow.document.write(cardHTML);
             newWindow.document.close();
-
-            
         }
+        
+        // Inicia a página com o campo OAB no estado correto
+        toggleOAB();
     </script>
-
-<footer>
-    <p>Desenvolvido por MDR Advocacia</p>
-</footer>
-
 </body>
 </html>
