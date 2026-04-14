@@ -110,8 +110,8 @@ Usuário copia para email
 - Abre nova aba com resultado
 
 ### 3. Estrutura da Assinatura
-```
-exemploassinatura.png
+![Exemplo de Assinatura](exemploassinatura.png)
+
 ---
 
 ## 🔧 Configurações Personalizáveis
