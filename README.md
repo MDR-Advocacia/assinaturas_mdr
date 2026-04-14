@@ -111,8 +111,7 @@ Usuário copia para email
 
 ### 3. Estrutura da Assinatura
 ```
-![alt text](exemploassinatura.png)
-
+exemploassinatura.png
 ---
 
 ## 🔧 Configurações Personalizáveis
@@ -132,38 +131,11 @@ bgColor: '#000000'
 textColor: '#ffffff'
 ```
 
-### Dados Corporativos (fixos no HTML)
-- **Site**: https://mdradvocacia.com/
-- **Endereço**: R. Desembargador José Gomes da Costa, 1975. Capim Macio. Natal/RN
-
----
-
-## ⚡ Problemas Conhecidos e Soluções
-
-### ⚠️ URL dos Selos Incorreta
-**Problema**: A URL dos selos usa `/view?usp=drive_link` que não funciona para exibir imagem diretamente.
-
-**Solução Recomendada**:
-```javascript
-// ANTES (não funciona)
-'https://drive.google.com/file/d/15UOqmG-rcPEuGZyIKVWzHEvzNtW6MNUw/view?usp=drive_link'
-
-// DEPOIS (correto)
-'https://drive.google.com/uc?id=15UOqmG-rcPEuGZyIKVWzHEvzNtW6MNUw'
-```
-
-### 📱 Compatibilidade com Email
-- Usa tabelas HTML (padrão para email)
-- Estilos inline (alguns clientes de email ignoram `<style>`)
-- Imagens do Google Drive (requerem acesso)
-
----
 
 ## 📝 Como Usar
 
 ### 1. Abrir a Página
 - Abra `Assinaturas.html` em um navegador
-- Ou hospede em um servidor web
 
 ### 2. Preencher Formulário
 - Digite o nome completo
@@ -183,41 +155,7 @@ textColor: '#ffffff'
 - Cole em uma assinatura ou novo email
 - Ajuste se necessário
 
----
-
-## 🚀 Recomendações de Melhoria
-
-1. **Hospedar Imagens Localmente** - Evitar dependência do Google Drive
-2. **Salvar como Arquivo** - Adicionar botão para baixar HTML como arquivo
-3. **Preview em Tempo Real** - Mostrar assinatura enquanto digita
-4. **Validação de Telefone** - Formatar automaticamente
-5. **Remover Elementos Desnecessários** - `assinaturas.png`, ID `contactForm`
-6. **Suporte a Email** - Integração com WebAPI para enviar
-7. **Responsividade em Mobile** - Ajustar formulário para telas pequenas
-
----
-
-## 📋 Checklist de Manutenção
-
-- [x] Código funcional
-- [x] Estilos CSS aplicados
-- [x] Validação de entrada básica
-- [ ] Imagens hospedadas localmente
-- [ ] URL dos selos corrigida
-- [ ] Documentação completa (✅ Feito aqui)
-- [ ] Remover elementos desnecessários
-- [ ] Testes em múltiplos clientes de email
-
----
-
-## 👨‍💼 Informações da Empresa
-
-**MDR Advocacia**
-- 📧 Site: https://mdradvocacia.com/
-- 📍 Endereço: R. Desembargador José Gomes da Costa, 1975. Capim Macio. Natal/RN
-- Especialidade: Advocacia
-
----
+-
 
 ## 📄 Licença
 Desenvolvido para MDR Advocacia - Uso interno
