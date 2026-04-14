@@ -113,7 +113,7 @@ Usuário copia para email
 - Abre nova aba com resultado
 
 ### 3. Estrutura da Assinatura
-![Exemplo de Assinatura](exemploassinatura.png)
+![Exemplo de Assinatura](assets/exemploassinatura.png)
 
 ---
 
