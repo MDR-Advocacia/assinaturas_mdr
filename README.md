@@ -3,6 +3,9 @@
 ## 📋 Descrição
 Sistema web para gerar assinaturas de email profissionais para a MDR Advocacia. Permite customizar nome, cargo, telefone e número OAB (para advogados), com seleção de cores.
 
+Acesso pelo ip interno antigo da mdr advocacia : http://192.168.0.33/
+Outros links >> assinaturas
+
 ---
 
 ## 🎯 Funcionalidades
